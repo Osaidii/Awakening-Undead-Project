@@ -5,7 +5,7 @@ class_name ammo_box extends interactable
 
 var is_opened := false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if get_parent().visible == true:
 		collision.disabled = false
 

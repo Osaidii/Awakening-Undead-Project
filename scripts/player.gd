@@ -73,6 +73,11 @@ var stamina_regen := 75
 var is_regening := false
 
 func _ready() -> void:
+	if Variables.cutscene_played:
+		cutscenes.play("intro")
+	else:
+		gate_anims.play("RESET")
+		gameplay()
 	death.modulate.a = 0
 	Variables.is_pauseable = false
 	position = Vector3(16, -5, 5)
@@ -296,7 +301,7 @@ func hit(dir) -> void:
 
 func die() -> void:
 	cutscenes.play("die")
-	await get_tree().create_timer(3.5)
+	await get_tree().create_timer(3.5).timeout
 	get_tree().reload_current_scene()
 
 func take_damage(damage) -> void:
@@ -397,12 +402,15 @@ func gameplay() -> void:
 
 func ammo_boxes(yesorno: bool) -> void:
 	if yesorno == false:
-		boxes.visible = false
+		for i in range(boxes.get_child_count()):
+			var box = boxes.get_child(i)
+			box.visible = false
+			box.collision_layer = 10
 	if yesorno == true:
-		boxes.visible = true
 		for i in range(boxes.get_child_count()):
 			var box = boxes.get_child(i)
 			box.visible = true
+			box.collision_layer = 1
 
 func out_of_ammo() -> void:
 	if weapons.total_ammo_count < 11:

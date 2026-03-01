@@ -10,3 +10,4 @@ var is_pauseable: bool
 var give_ammo: bool
 var can_spawn_double: bool
 var reload: bool
+var cutscene_played := false
