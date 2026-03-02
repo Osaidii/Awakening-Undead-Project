@@ -43,6 +43,7 @@ extends CharacterBody3D
 @onready var ui: Control = $UI
 @onready var boxes: Node3D = $"../Navigation/Boxes"
 @onready var death: ColorRect = $UI/Death
+@onready var main_music: AudioStreamPlayer3D = $"../Audios/Main Music"
 
 const AK_47 = preload("res://weapon_resource/ak47.tres")
 const AUG = preload("res://weapon_resource/aug.tres")
@@ -78,6 +79,7 @@ func _ready() -> void:
 	else:
 		gate_anims.play("RESET")
 		gameplay()
+		intro_method()
 	death.modulate.a = 0
 	Variables.is_pauseable = false
 	position = Vector3(16, -5, 5)
@@ -320,6 +322,7 @@ func intro_method() -> void:
 	gate_anims.play_backwards("close")
 	await get_tree().create_timer(10).timeout
 	Variables.is_pauseable = true
+	main_music.playing = true
 
 func outro_method() -> void:
 	camera.rotation = Vector3(0, 0, 0)
@@ -335,7 +338,7 @@ func wave_manager(zombies, z_health, wait, atp) -> void:
 	Variables.zombie_health = z_health
 	for i in range(zombies):
 		await get_tree().create_timer(wait).timeout
-		var point = spawn_points.get_child(randf_range(0, spawn_points.get_child_count() - 1))
+		var point = spawn_points.get_child(randi_range(0, spawn_points.get_child_count() - 1))
 		point.spawn_zombie()
 		if Variables.zombies_alive > atp:
 			await get_tree().process_frame

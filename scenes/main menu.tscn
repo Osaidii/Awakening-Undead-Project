@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=4 uid="uid://bteby37ko2w44"]
+[gd_scene load_steps=39 format=4 uid="uid://bteby37ko2w44"]
 
 [ext_resource type="Script" uid="uid://cqfod02gpygrh" path="res://scripts/main_menu.gd" id="1_0inpw"]
 [ext_resource type="FontFile" uid="uid://dkke0ijdtyul1" path="res://assets/Font.ttf" id="1_xccyo"]
@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://ce36lr25kckwg" path="res://instantiable/zombie_ragdoll.tscn" id="19_uhvra"]
 [ext_resource type="Texture2D" uid="uid://c0v2672tx5bda" path="res://assets/ui/Button_Flesh.png" id="20_jxsxo"]
 [ext_resource type="Texture2D" uid="uid://dedfqg21xa46q" path="res://assets/ui/Button_Flesh_Pressed.png" id="20_yl5mm"]
+[ext_resource type="AudioStream" uid="uid://cl08er3pbyl0l" path="res://assets/main music.mp3" id="23_tvyjs"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tdh66"]
 albedo_texture = ExtResource("10_e37nt")
@@ -1065,6 +1066,10 @@ transform = Transform3D(0.992198, -5.44973e-09, 0.124675, -0.124675, -4.33703e-0
 light_energy = 16.0
 spot_range = 6.789
 spot_angle = 26.0572
+
+[node name="Music" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("23_tvyjs")
+autoplay = true
 
 [connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Settings" to="." method="_on_settings_pressed"]

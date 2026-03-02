@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dcn5bfryp2w8h"
+path="res://.godot/imported/entry sad music.wav-0adcf7cef4d1135c621829f05c1626e1.sample"
+
+[deps]
+
+source_file="res://assets/entry sad music.wav"
+dest_files=["res://.godot/imported/entry sad music.wav-0adcf7cef4d1135c621829f05c1626e1.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
