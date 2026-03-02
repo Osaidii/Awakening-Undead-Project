@@ -44,6 +44,8 @@ extends CharacterBody3D
 @onready var boxes: Node3D = $"../Navigation/Boxes"
 @onready var death: ColorRect = $UI/Death
 @onready var main_music: AudioStreamPlayer3D = $"../Audios/Main Music"
+@onready var bg: ColorRect = $"../Credits/BG"
+@onready var entry_music: AudioStreamPlayer3D = $"../Audios/Entry Music"
 
 const AK_47 = preload("res://weapon_resource/ak47.tres")
 const AUG = preload("res://weapon_resource/aug.tres")
@@ -76,10 +78,9 @@ var is_regening := false
 func _ready() -> void:
 	if Variables.cutscene_played:
 		cutscenes.play("intro")
+		entry_music.play()
 	else:
-		gate_anims.play("RESET")
-		gameplay()
-		intro_method()
+		cutscenes.play("restart")
 	death.modulate.a = 0
 	Variables.is_pauseable = false
 	position = Vector3(16, -5, 5)
@@ -131,6 +132,11 @@ func _physics_process(delta: float) -> void:
 		head.rotation = Vector3(0, 0 ,0)
 		camera.rotation = Vector3(0, 0 ,0)
 		gameplay()
+	
+	if can_control:
+		Variables.can_control = true
+	else:
+		Variables.can_control = false	
 	
 	if Variables.reload:
 		weapons.reload()
@@ -302,6 +308,7 @@ func hit(dir) -> void:
 	Variables.player_hit = false
 
 func die() -> void:
+	
 	cutscenes.play("die")
 	await get_tree().create_timer(3.5).timeout
 	get_tree().reload_current_scene()
@@ -408,12 +415,12 @@ func ammo_boxes(yesorno: bool) -> void:
 		for i in range(boxes.get_child_count()):
 			var box = boxes.get_child(i)
 			box.visible = false
-			box.collision_layer = 10
+			box.get_child(2).disabled = true
 	if yesorno == true:
 		for i in range(boxes.get_child_count()):
 			var box = boxes.get_child(i)
 			box.visible = true
-			box.collision_layer = 1
+			box.get_child(2).disabled = false
 
 func out_of_ammo() -> void:
 	if weapons.total_ammo_count < 11:

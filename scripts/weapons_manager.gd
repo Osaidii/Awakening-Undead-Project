@@ -9,7 +9,6 @@ signal weapon_fired
 		weapon = value
 		if Engine.is_editor_hint():
 			load_weapon()
-
 @export var sway_speed := 1.2
 @export var reset := false:
 	set(value):
@@ -20,6 +19,20 @@ signal weapon_fired
 @onready var player: CharacterBody3D = $"../../../../.."
 @onready var delay: Timer = $Delay
 @onready var weapon_name: Label = $"../../../../../HUD/Weapon Name"
+@onready var glock___five_seven: AudioStreamPlayer3D = $"Glock _ Five Seven"
+
+const AK_47 = preload("res://weapon_resource/ak47.tres")
+const AUG = preload("res://weapon_resource/aug.tres")
+const FAMAS = preload("res://weapon_resource/famas.tres")
+const FIVE_SEVEN = preload("res://weapon_resource/five seven.tres")
+const GLOCK_18 = preload("res://weapon_resource/glock_18.tres")
+const M_4A_1 = preload("res://weapon_resource/m4a1.tres")
+const MAC_10 = preload("res://weapon_resource/mac10.tres")
+const MP_5 = preload("res://weapon_resource/mp5.tres")
+const P_90 = preload("res://weapon_resource/p90.tres")
+const SCAR_H = preload("res://weapon_resource/scar-h.tres")
+const TEC_9 = preload("res://weapon_resource/tec 9.tres")
+const UMP_45 = preload("res://weapon_resource/ump 45.tres")
 
 var sway_noise: FastNoiseLite
 var mouse_movement: Vector2
@@ -51,7 +64,8 @@ func _input(event: InputEvent) -> void:
 		mouse_movement = event.relative
 
 func _physics_process(_delta: float) -> void:
-	if !player.can_control: return
+	if is_reloading: return
+	if !Variables.can_control: return
 	delay.wait_time = weapon.bullet_delay
 	if delay.is_stopped() :
 		if Engine.is_editor_hint():
@@ -124,6 +138,7 @@ func bullet_damage(pos: Vector3, normal: Vector3) -> void:
 	instance.queue_free()
 
 func shoot() -> void:
+	if is_reloading: return
 	if magazine_count > 0:
 		weapon_fired.emit()
 		var camera = $"../.."
@@ -136,6 +151,8 @@ func shoot() -> void:
 		query.collide_with_areas = true
 		query.collision_mask = 2
 		query.exclude = [player]
+		if weapon == GLOCK_18 or weapon == FIVE_SEVEN:
+			glock___five_seven.play()
 		var result: Dictionary = space_state.intersect_ray(query)
 		if result:
 			bullet_damage(result.get("position"), result.get("normal"))
@@ -173,6 +190,7 @@ func remove_bullets() -> void:
 func reload() -> void:
 	if magazine_count == weapon.magazine_size: return
 	is_reloading = true
+	reload_anim()
 	
 	if magazine_count == 0:
 		if total_ammo_count >= weapon.magazine_size:
@@ -197,3 +215,8 @@ func reload() -> void:
 			total_ammo_count = 0
 		elif total_ammo_count == 0:
 			pass
+	is_reloading = false
+
+func reload_anim() -> void:
+	position.y = lerp(position.y, position.y - 3, 2)
+	await get_tree().create_timer(2).timeout

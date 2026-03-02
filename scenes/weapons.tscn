@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://dxm16fl2emhyy"]
+[gd_scene load_steps=11 format=3 uid="uid://dxm16fl2emhyy"]
 
 [ext_resource type="ArrayMesh" uid="uid://bn7lltmcu1rkl" path="res://weapons/ak47/ak47.tres" id="1_pe4jq"]
 [ext_resource type="Script" uid="uid://6p1qgjqqks07" path="res://scripts/weapons_manager.gd" id="1_rvi01"]
 [ext_resource type="Resource" uid="uid://dvf14lmq64upv" path="res://weapon_resource/ak47.tres" id="3_0ccn8"]
 [ext_resource type="Script" uid="uid://ono8oq4047ee" path="res://scripts/muzzle_flash.gd" id="4_pe4jq"]
+[ext_resource type="AudioStream" uid="uid://bx4qvon8odkfp" path="res://assets/Glock 17 sound by SFX.mp3" id="5_0ccn8"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pe4jq"]
 angle_min = -73.0
@@ -67,3 +68,9 @@ omni_range = 10.0
 
 [node name="Delay" type="Timer" parent="."]
 one_shot = true
+
+[node name="Glock _ Five Seven" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_0ccn8")
+attenuation_model = 2
+volume_db = -10.0
+max_db = -10.0

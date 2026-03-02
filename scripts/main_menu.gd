@@ -5,6 +5,7 @@ extends Control
 @onready var play_pop_up: Control = $"Play Pop up"
 @onready var settings_pop_up: Control = $"Settings Pop up"
 @onready var mouse_stopper: ColorRect = $"Mouse Stopper"
+@onready var music: AudioStreamPlayer3D = $Music
 
 func _ready() -> void:
 	await get_tree().create_timer(1).timeout
@@ -12,6 +13,8 @@ func _ready() -> void:
 	animation.play("transition")
 	await get_tree().create_timer(1).timeout
 	black.visible = false
+	for i in range(10):
+		music.volume_db += 9
 
 func _on_play_pressed() -> void:
 	black.visible = true
@@ -27,8 +30,10 @@ func _on_continue_pressed() -> void:
 	await get_tree().create_timer(0.1).timeout
 	play_pop_up.visible = false
 	await get_tree().create_timer(2).timeout
-	get_tree().change_scene_to_file("res://scenes/world.tscn")
 	black.visible = true
+	get_tree().change_scene_to_file("res://scenes/world.tscn")
+	for i in range(10):
+		music.volume_db -= 9
 
 func _on_settings_pressed() -> void:
 	mouse_stopper.visible = false

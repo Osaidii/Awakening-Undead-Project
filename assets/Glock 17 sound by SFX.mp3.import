@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bx4qvon8odkfp"
+path="res://.godot/imported/Glock 17 sound by SFX.mp3-f5da626b14be116650c6924ceda59dac.mp3str"
+
+[deps]
+
+source_file="res://assets/Glock 17 sound by SFX.mp3"
+dest_files=["res://.godot/imported/Glock 17 sound by SFX.mp3-f5da626b14be116650c6924ceda59dac.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
